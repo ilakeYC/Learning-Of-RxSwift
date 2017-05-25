@@ -4,9 +4,36 @@ import RxSwift
 
 example(of: "ReplaySubject") {
     
+    /*
+        ReplySubject 会接收以前n个值的变化以及之后的所有变化
+     */
+    
     let disposeBag = DisposeBag()
     
+    let subject = ReplaySubject<Int>.create(bufferSize: 3)
     
+    subject.onNext(0)
+    subject.onNext(1)
+    subject.onNext(2)
+    subject.onNext(3)
+    
+    subject.subscribe(onNext: {
+        print("first:", $0)
+    }).disposed(by: disposeBag)
+    
+    print("-- after first subscribe --")
+    
+    subject.onNext(4)
+    
+    subject.onNext(5)
+    
+    subject.subscribe(onNext: {
+        print("second:", $0)
+    }).disposed(by: disposeBag)
+    
+    print("-- after second subscribe --")
+    
+    subject.onNext(6)
 }
 
 /*:
