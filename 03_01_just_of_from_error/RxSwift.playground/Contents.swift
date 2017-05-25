@@ -23,7 +23,7 @@ example(of: "from") {
     
     let disposeBag = DisposeBag()
     
-    // 如果局部变量接受了返回值，则使用局部变量.disposed(by:)
+    // 如果局部变量接受了返回值，则使用 `局部变量`.disposed(by:)
     // 否则才可以直接.disposed(by:)
     let subscription = Observable.from([1,2,3])
         .subscribe(onNext: {
