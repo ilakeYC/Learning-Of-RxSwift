@@ -4,7 +4,34 @@ import RxSwift
 
 example(of: "PublishSubject") {
     
+    let disposeBag = DisposeBag()
     
+    let subject = PublishSubject<String>()
+    
+    subject.subscribe(onNext: {
+        print($0)
+    }).disposed(by: disposeBag)
+    
+    subject.on(.next("Hello"))
+    //  ↑
+    //equal
+    //  ↓
+    subject.onNext("World")
+    
+//    subject.onCompleted()
+//    
+//    subject.onNext("subject has completed. so this word wont print")
+    
+    let newSubscribe = subject.subscribe(onNext: {
+        print("> new subscribe:", $0)
+    })
+    
+    subject.onNext("this is new")
+    subject.onNext("both subscribes received the next event")
+    
+    newSubscribe.dispose()
+    
+    subject.onNext("the newSubscribe has been disposed. so only the first subscribe received this next event")
 }
 
 /*:
