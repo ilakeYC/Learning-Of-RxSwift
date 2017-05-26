@@ -7,6 +7,18 @@ example(of: "Variable") {
     let disposeBag = DisposeBag()
     
     
+    let variable = Variable("A")
+    
+    variable.asObservable() //as a BehaviorSubject
+        .subscribe {
+            print($0)
+        }
+        .disposed(by: disposeBag)
+    
+    variable.value
+    variable.value = "B"
+    
+    // auto completed when dispose
 }
 
 /*:
